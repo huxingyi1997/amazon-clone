@@ -1,7 +1,7 @@
 import { FC, ReactNode } from "react";
 import { Grid } from "@mui/material";
 
-import AmazonLogo from "../../assets/amazon-logo.png";
+import AmazonLogo from "../../../assets/amazon-logo.png";
 
 interface AuthLayoutProps {
   children: ReactNode;

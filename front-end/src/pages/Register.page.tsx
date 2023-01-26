@@ -1,6 +1,6 @@
 import { FC } from "react";
-import AuthLayout from "../features/auth/AuthLayout";
-import RegistrationFormComponent from "../features/auth/RegistrationForm.component";
+import AuthLayout from "../features/auth/components/AuthLayout";
+import RegistrationFormComponent from "../features/auth/components/RegistrationForm.component";
 
 const RegisterPage: FC = () => {
   return (

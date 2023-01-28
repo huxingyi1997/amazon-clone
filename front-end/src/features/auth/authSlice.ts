@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { Reducer, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { DisplayUser } from "./models/DisplayUser.interface";
 import { Jwt } from "./models/Jwt";
 import { NewUser } from "./models/NewUser";
@@ -19,7 +19,7 @@ interface AsyncState {
   isError: boolean;
 }
 
-interface AuthState extends AsyncState {
+export interface AuthState extends AsyncState {
   user?: DisplayUser | null;
   jwt?: Jwt;
   isAuthenticated?: boolean;
@@ -142,4 +142,4 @@ export const selectedUser = (state: RootState) => {
   return state.auth;
 };
 
-export const authReducer = authSlice.reducer;
+export const authReducer: Reducer<AuthState> = authSlice.reducer;

@@ -13,8 +13,8 @@ import { Link, useNavigate } from "react-router-dom";
 import useInput from "../../../hooks/input/use-input";
 import { validatePasswordLength } from "../../../shared/utils/validation/length";
 import { validateEmail } from "../../../shared/utils/validation/email";
-import { useAppDispatch, useAppSelector } from '../../../hooks/redux/hooks';
-import { login, reset } from '../authSlice';
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux/hooks";
+import { login, reset } from "../authSlice";
 import { LoginUser } from "../models/LoginUser.interface";
 
 const SigninFormComponent: FC = () => {
@@ -41,10 +41,12 @@ const SigninFormComponent: FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const { isLoading, isSuccess, isAuthenticated } = useAppSelector((state) => state.auth);
+  const { isLoading, isSuccess, isAuthenticated } = useAppSelector(
+    (state) => state.auth
+  );
 
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     if (isSuccess) {
       dispatch(reset());
@@ -54,7 +56,7 @@ const SigninFormComponent: FC = () => {
 
   useEffect(() => {
     if (!isAuthenticated) return;
-    navigate('/');
+    navigate("/");
   }, [isAuthenticated]);
 
   const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
@@ -69,7 +71,8 @@ const SigninFormComponent: FC = () => {
     dispatch(login(loginUser));
   };
 
-  if (isLoading) return <CircularProgress sx={{ marginTop: '64px' }} color='primary' />;
+  if (isLoading)
+    return <CircularProgress sx={{ marginTop: "64px" }} color="primary" />;
 
   return (
     <>
@@ -131,6 +134,9 @@ const SigninFormComponent: FC = () => {
 
             <Button
               variant="contained"
+              disabled={
+                !validatePasswordLength(password) || !validateEmail(email)
+              }
               style={{
                 marginTop: "16px",
                 height: "31px",

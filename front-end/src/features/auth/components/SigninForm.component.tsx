@@ -133,6 +133,7 @@ const SigninFormComponent: FC = () => {
             />
 
             <Button
+              id="signin-btn"
               variant="contained"
               disabled={
                 !validatePasswordLength(password) || !validateEmail(email)
@@ -171,7 +172,7 @@ const SigninFormComponent: FC = () => {
           <small style={{ color: "#767676" }}>New to Amazon?</small>
         </Divider>
 
-        <Link to="/register" style={{ color: "#0000ee" }}>
+        <Link id="register-link" to="/register" style={{ color: "#0000ee" }}>
           <Button
             variant="contained"
             style={{

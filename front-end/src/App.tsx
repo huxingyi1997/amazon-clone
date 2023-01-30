@@ -13,6 +13,7 @@ import HomePage from "./pages/Home.page";
 import RegisterPage from "./pages/Register.page";
 import SigninPage from "./pages/Signin.page";
 import PrivateRoute from "./features/auth/components/PrivateRoute";
+import { store } from "./store";
 
 const App: FC = () => {
   return (
@@ -28,5 +29,16 @@ const App: FC = () => {
     </ThemeProvider>
   );
 };
+
+type CypressWindow = Window &
+  typeof globalThis & { Cypress: any; store: any; appReady: boolean };
+
+const thisWindow = window as CypressWindow;
+
+if (thisWindow.Cypress) {
+  console.log("CYPRESS WINDOW");
+  thisWindow.appReady = true;
+  thisWindow.store = store;
+}
 
 export default App;

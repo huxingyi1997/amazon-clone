@@ -1,0 +1,23 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 1
+  },
+  "1 info pnpm": {
+    "err": {
+      "name": "Error",
+      "message": "not found: test:e2e",
+      "code": "ENOENT",
+      "stack": "Error: not found: test:e2e\n    at getNotFoundError (/Users/xingyi.hu/.nvm/versions/node/v16.15.1/lib/node_modules/pnpm/dist/pnpm.cjs:21148:51)\n    at Function.whichSync [as sync] (/Users/xingyi.hu/.nvm/versions/node/v16.15.1/lib/node_modules/pnpm/dist/pnpm.cjs:21225:13)\n    at getCommandAbsolutePathSync (/Users/xingyi.hu/.nvm/versions/node/v16.15.1/lib/node_modules/pnpm/dist/pnpm.cjs:22903:44)\n    at default_1 (/Users/xingyi.hu/.nvm/versions/node/v16.15.1/lib/node_modules/pnpm/dist/pnpm.cjs:22912:32)\n    at /Users/xingyi.hu/.nvm/versions/node/v16.15.1/lib/node_modules/pnpm/dist/pnpm.cjs:184716:39"
+    }
+  },
+  "2 error pnpm": {
+    "code": "ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL",
+    "prefix": "/Users/xingyi.hu",
+    "err": {
+      "name": "pnpm",
+      "message": "not found: test:e2e",
+      "code": "ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL",
+      "stack": "Error: not found: test:e2e\n    at getNotFoundError (/Users/xingyi.hu/.nvm/versions/node/v16.15.1/lib/node_modules/pnpm/dist/pnpm.cjs:21148:51)\n    at Function.whichSync [as sync] (/Users/xingyi.hu/.nvm/versions/node/v16.15.1/lib/node_modules/pnpm/dist/pnpm.cjs:21225:13)\n    at getCommandAbsolutePathSync (/Users/xingyi.hu/.nvm/versions/node/v16.15.1/lib/node_modules/pnpm/dist/pnpm.cjs:22903:44)\n    at default_1 (/Users/xingyi.hu/.nvm/versions/node/v16.15.1/lib/node_modules/pnpm/dist/pnpm.cjs:22912:32)\n    at /Users/xingyi.hu/.nvm/versions/node/v16.15.1/lib/node_modules/pnpm/dist/pnpm.cjs:184716:39"
+    }
+  }
+}

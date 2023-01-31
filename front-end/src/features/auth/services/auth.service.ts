@@ -6,11 +6,10 @@ import { NewUser } from "../models/NewUser";
 import { LoginUser } from "../models/LoginUser.interface";
 import { Jwt } from "../models/Jwt";
 import { DecodedJwt } from "../models/DecodedJwt.interface";
-
-const api = import.meta.env.VITE_REACT_APP_BASE_API;
+import { baseAPI } from "../../constant";
 
 const register = async (newUser: NewUser): Promise<DisplayUser | null> => {
-  const url = `${api}/auth/register`;
+  const url = `${baseAPI}/auth/register`;
   const response = await axios.post(url, newUser);
 
   return response.data;
@@ -22,7 +21,7 @@ interface LoginData {
 }
 
 const login = async (user: LoginUser): Promise<LoginData> => {
-  const url = `${api}/auth/login`;
+  const url = `${baseAPI}/auth/login`;
   const response = await axios.post(url, user);
 
   if (response.data) {
@@ -44,7 +43,7 @@ const logout = (): void => {
 };
 
 const verifyJwt = async (jwt: string): Promise<boolean> => {
-  const url = `${api}/auth/verify-jwt`;
+  const url = `${baseAPI}/auth/verify-jwt`;
   const response = await axios.post(url, { jwt });
 
   if (response.data) {

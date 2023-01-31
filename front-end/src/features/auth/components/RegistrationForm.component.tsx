@@ -1,4 +1,6 @@
 import { FC, FormEvent, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
 import {
   Box,
   Grid,
@@ -9,7 +11,7 @@ import {
   Divider,
   CircularProgress,
 } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+
 import useInput from "../../../hooks/input/use-input";
 import {
   validateNameLength,
@@ -103,6 +105,12 @@ const RegistrationFormComponent: FC = () => {
 
     dispatch(register(newUser));
   };
+
+  const registerDisabled =
+    !validateNameLength(name) ||
+    !validatePasswordLength(password) ||
+    !validateEmail(email) ||
+    password !== confirmPassword;
 
   if (isLoading)
     return <CircularProgress sx={{ marginTop: "64px" }} color="primary" />;
@@ -207,12 +215,15 @@ const RegistrationFormComponent: FC = () => {
           <Button
             id="register-btn"
             variant="contained"
+            disabled={registerDisabled}
             style={{
               marginTop: "12px",
               height: "31px",
-              backgroundColor: "#f0c14b",
+              backgroundColor: registerDisabled ? undefined : "#f0c14b",
               color: "black",
-              borderColor: "#a88734 #9c7e31 #846a29",
+              borderColor: registerDisabled
+                ? undefined
+                : "#a88734 #9c7e31 #846a29",
               textTransform: "none",
             }}
             type="submit"

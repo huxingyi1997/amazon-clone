@@ -1,7 +1,8 @@
 import { FC, useEffect } from "react";
+import { Navigate } from "react-router-dom";
+
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux/hooks";
 import { verifyJwt } from "../authSlice";
-import { Navigate } from "react-router-dom";
 
 interface PrivateRouteProps {
   page: JSX.Element;

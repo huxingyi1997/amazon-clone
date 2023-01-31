@@ -1,7 +1,8 @@
 import { FC, ReactNode } from "react";
+
 import { Grid } from "@mui/material";
 
-import AmazonLogo from "../../../assets/amazon-logo.png";
+import AmazonLogo from "../../../assets/amazon-logo-black.png";
 
 interface AuthLayoutProps {
   children: ReactNode;
@@ -18,7 +19,7 @@ const AuthLayout: FC<AuthLayoutProps> = (props: AuthLayoutProps) => {
       justifyContent="flex-start"
       alignItems="center"
     >
-      <img src={AmazonLogo} alt="amazon-logo" height="40px" />
+      <img src={AmazonLogo} alt="amazon logo" height="40px" />
       <main>{children}</main>
     </Grid>
   );

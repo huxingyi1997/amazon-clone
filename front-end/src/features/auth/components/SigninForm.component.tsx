@@ -71,6 +71,8 @@ const SigninFormComponent: FC = () => {
     dispatch(login(loginUser));
   };
 
+  const signInDisabled =
+    !validatePasswordLength(password) || !validateEmail(email);
   if (isLoading)
     return <CircularProgress sx={{ marginTop: "64px" }} color="primary" />;
 
@@ -135,15 +137,15 @@ const SigninFormComponent: FC = () => {
             <Button
               id="signin-btn"
               variant="contained"
-              disabled={
-                !validatePasswordLength(password) || !validateEmail(email)
-              }
+              disabled={signInDisabled}
               style={{
                 marginTop: "16px",
                 height: "31px",
-                backgroundColor: "#f0c14b",
+                backgroundColor: signInDisabled ? undefined : "#f0c14b",
                 color: "black",
-                borderColor: "#a88734 #9c7e31 #846a29",
+                borderColor: signInDisabled
+                  ? undefined
+                  : "#a88734 #9c7e31 #846a29",
                 textTransform: "none",
               }}
               type="submit"

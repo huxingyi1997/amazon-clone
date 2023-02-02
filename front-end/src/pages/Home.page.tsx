@@ -8,7 +8,7 @@ import { getProducts } from "../features/products/productSlice";
 const HomePage: FC = () => {
   const dispatch = useAppDispatch();
 
-  const { cart, products } = useAppSelector((state) => state.product);
+  const { products } = useAppSelector((state) => state.product);
 
   useEffect(() => {
     dispatch(getProducts());
@@ -17,6 +17,7 @@ const HomePage: FC = () => {
   return (
     <div>
       <HeaderComponent />
+      
       <div
         style={{
           display: "flex",

@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 
 import { ProductDocument } from "../models/Product";
-import { useAppDispatch } from "../../../hooks/redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux/hooks";
 import { decrementProduct, incrementProduct } from "../productSlice";
 
 interface ProductComponentProps {
@@ -20,9 +20,13 @@ interface ProductComponentProps {
 const ProductComponent: FC<ProductComponentProps> = ({
   product,
 }: ProductComponentProps) => {
-  const [count, setCount] = useState<number>(0);
-
   const dispatch = useAppDispatch();
+
+  const { cart } = useAppSelector((state) => state.product);
+
+  const cartItem = cart.find((item) => item._id === product._id);
+
+  const qty: number = cartItem ? cartItem.quantity : 0;
 
   return (
     <Card sx={{ width: 300, minWidth: 300 }}>
@@ -34,34 +38,27 @@ const ProductComponent: FC<ProductComponentProps> = ({
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          $ {product.price}
+          $ {product.price.toFixed(2)}
         </Typography>
         {product.description && (
           <Typography variant="body2" color="text.secondary">
-            $ {product.description}
+           * {product.description}
           </Typography>
         )}
       </CardContent>
       <CardActions sx={{ display: "flex", justifyContent: "space-between" }}>
         <Button
           onClick={() => {
-            setCount((prevCount: number) => {
-              if (prevCount === 0) return 0;
-              return prevCount - 1;
-            });
             dispatch(decrementProduct(product));
           }}
-          disabled={count === 0}
+          disabled={qty === 0}
           size="large"
         >
           -
         </Button>
-        <span>{count}</span>
+        <span>{qty}</span>
         <Button
           onClick={() => {
-            setCount((prevCount: number) => {
-              return prevCount + 1;
-            });
             dispatch(incrementProduct(product));
           }}
           size="large"

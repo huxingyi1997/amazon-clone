@@ -49,7 +49,7 @@ const modifyQtyByOne = (
       (p) => p._id !== productInCart._id
     );
 
-    const modification = modificationType === 'INCREMENT' ? 1 : -1;
+    const modification = modificationType === "INCREMENT" ? 1 : -1;
     productInCart.quantity = productInCart.quantity + modification;
 
     if (productInCart.quantity === 0) {
@@ -90,6 +90,9 @@ export const productSlice = createSlice({
       );
       state.cart = modifiedCart;
     },
+    resetCart: (state) => {
+      state.cart = [];
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -109,6 +112,7 @@ export const productSlice = createSlice({
   },
 });
 
-export const { incrementProduct, decrementProduct } = productSlice.actions;
+export const { incrementProduct, decrementProduct, resetCart } =
+  productSlice.actions;
 
 export const productReducer: Reducer<ProductState> = productSlice.reducer;

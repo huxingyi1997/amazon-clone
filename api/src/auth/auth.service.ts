@@ -1,6 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+
 import { hash, compare } from 'bcrypt';
+
 import { UserService } from '../user/user.service';
 import { NewUserDTO } from '../user/dtos/new-user.dto';
 import { UserDetails } from '../user/user-details.interface';

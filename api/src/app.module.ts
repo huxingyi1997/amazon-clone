@@ -9,12 +9,17 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { StripeModule } from './stripe/stripe.module';
 
+const IS_DEV = process.env.NODE_ENV !== 'production';
+
+const url = IS_DEV
+  ? 'mongodb://localhost:27017/amazon'
+  : 'mongodb://mongo:g18Jdel37P62@infra.zeabur.com:30224';
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    MongooseModule.forRoot('mongodb://localhost:27017/amazon'),
+    MongooseModule.forRoot(url),
     ProductModule,
     UserModule,
     AuthModule,

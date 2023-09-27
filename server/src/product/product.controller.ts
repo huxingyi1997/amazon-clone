@@ -8,26 +8,25 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 
 import { ProductService } from './product.service';
-import { ProductDocument } from './product.schema';
+import { Product, ProductDocument } from './product.schema';
 import { JwtGuard } from '../auth/guards/jwt.guard';
+import { CreateProductDto, UpdateProductDto } from './dto/product.dto';
 
+@ApiTags('product')
 @Controller('product')
 export class ProductController {
   constructor(private productService: ProductService) {}
 
   @Post()
-  createProduct(
-    @Body('name') name: string,
-    @Body('price') price: number,
-    @Body('description') description?: string,
-  ): Promise<ProductDocument> {
-    return this.productService.create(name, price, description);
+  createProduct(@Body() createProductDto: CreateProductDto): Promise<Product> {
+    return this.productService.create(createProductDto);
   }
 
   @Get()
-  findAllProducts(): Promise<ProductDocument[]> {
+  findAllProducts(): Promise<Product[]> {
     return this.productService.findAll();
   }
 
@@ -40,15 +39,13 @@ export class ProductController {
   @Patch(':id')
   updateProduct(
     @Param('id') id: string,
-    @Body('name') name: string,
-    @Body('price') price: number,
-    @Body('description') description?: string,
-  ): Promise<ProductDocument> {
-    return this.productService.update(id, name, price, description);
+    @Body() updateProductDto: UpdateProductDto,
+  ): Promise<Product> {
+    return this.productService.update(id, updateProductDto);
   }
 
   @Delete(':id')
-  deleteProduct(@Param('id') id: string): Promise<void> {
+  deleteProduct(@Param('id') id: string): Promise<Product> {
     return this.productService.delete(id);
   }
 }

@@ -15,7 +15,7 @@ Open Mongo Express database on localhost port 8081
 **Terminal 1:**
 
 ```
-$ cd api
+$ cd server
 $ pnpm i
 $ pnpm start:dev
 ```
@@ -23,7 +23,7 @@ $ pnpm start:dev
 **Terminal 2:**
 
 ```
-$ cd front-end
+$ cd client
 $ pnpm i
 $ pnpm dev
 ```

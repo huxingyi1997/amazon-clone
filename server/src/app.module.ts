@@ -1,6 +1,7 @@
-import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
+import { Module, ValidationPipe } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { APP_GUARD, APP_PIPE } from '@nestjs/core';
+import { MongooseModule } from '@nestjs/mongoose';
 
 import * as Joi from '@hapi/joi';
 
@@ -10,6 +11,7 @@ import { ProductModule } from './product/product.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { StripeModule } from './stripe/stripe.module';
+import { JwtGuard } from './auth/guards/jwt.guard';
 
 @Module({
   imports: [
@@ -27,7 +29,7 @@ import { StripeModule } from './stripe/stripe.module';
         const IS_DEV = configService.get<string>('NODE_ENV') !== 'production';
         const uri = IS_DEV
           ? 'mongodb://localhost:27017/amazon'
-          : 'mongodb://mongo:g18Jdel37P62@infra.zeabur.com:30224/mongodb';
+          : configService.get<string>('MONGODB_PROD_ENV');
         return {
           uri,
         };
@@ -40,6 +42,16 @@ import { StripeModule } from './stripe/stripe.module';
     StripeModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_PIPE,
+      useClass: ValidationPipe,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: JwtGuard,
+    },
+  ],
 })
 export class AppModule {}

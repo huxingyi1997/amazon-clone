@@ -4,9 +4,10 @@ import { JwtService } from '@nestjs/jwt';
 import { hash, compare } from 'bcrypt';
 
 import { UserService } from '../user/user.service';
-import { NewUserDTO } from '../user/dtos/new-user.dto';
-import { UserDetails } from '../user/user-details.interface';
-import { ExistingUserDTO } from '../user/dtos/existing-user.dto';
+import { NewUserDTO } from '../user/dto/new-user.dto';
+import { ExistingUserDTO } from '../user/dto/existing-user.dto';
+import { UserDetails } from '../user/dto/user.dto';
+import { LoginVo, VerifyJwtVo } from './dto/auth.dto';
 
 @Injectable()
 export class AuthService {
@@ -19,7 +20,7 @@ export class AuthService {
     return hash(password, 12);
   }
 
-  async register(user: Readonly<NewUserDTO>): Promise<UserDetails | any> {
+  async register(user: Readonly<NewUserDTO>): Promise<UserDetails> {
     const { name, email, password } = user;
 
     const existingUser = await this.userService.findByEmail(email);
@@ -62,9 +63,7 @@ export class AuthService {
     return this.userService._getUserDetails(user);
   }
 
-  async login(
-    existingUser: ExistingUserDTO,
-  ): Promise<{ token: string } | null> {
+  async login(existingUser: ExistingUserDTO): Promise<LoginVo> {
     const { email, password } = existingUser;
     const user = await this.validateUser(email, password);
 
@@ -76,7 +75,7 @@ export class AuthService {
     return { token: jwt };
   }
 
-  async verifyJwt(jwt: string): Promise<{ exp: number }> {
+  async verifyJwt(jwt: string): Promise<VerifyJwtVo> {
     try {
       const { exp } = await this.jwtService.verifyAsync(jwt);
       return { exp };

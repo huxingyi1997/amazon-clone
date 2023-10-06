@@ -62,9 +62,9 @@ const modifyQtyByOne = (
   return newCart;
 };
 
-export const getProducts = createAsyncThunk("product", async () => {
+export const getProducts = createAsyncThunk("product", async (token?: string) => {
   try {
-    return await productService.getProducts();
+    return await productService.getProducts(token);
   } catch (error) {
     console.log("Get product with error: ", error);
   }

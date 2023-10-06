@@ -8,10 +8,12 @@ import { getProducts } from "../features/products/productSlice";
 const HomePage: FC = () => {
   const dispatch = useAppDispatch();
 
+  const { jwt } = useAppSelector((state) => state.auth);
   const { products } = useAppSelector((state) => state.product);
 
   useEffect(() => {
-    dispatch(getProducts());
+    const token = jwt?.token;
+    dispatch(getProducts(token));
   }, [])
 
   return (

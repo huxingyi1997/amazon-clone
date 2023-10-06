@@ -26,8 +26,8 @@ export interface AuthState extends AsyncState {
 }
 
 const initialState: AuthState = {
-  user: user,
-  jwt: jwt,
+  user,
+  jwt,
   isAuthenticated: false,
   isLoading: false,
   isSuccess: false,
@@ -113,7 +113,8 @@ export const authSlice = createSlice({
         state.isError = true;
         state.user = null;
         state.isAuthenticated = false;
-      }) // LOGOUT
+      })
+      // LOGOUT
       .addCase(logout.fulfilled, (state) => {
         state.user = null;
         state.jwt = null;

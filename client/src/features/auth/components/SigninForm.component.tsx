@@ -181,7 +181,7 @@ const SigninFormComponent: FC = () => {
               width: "100%",
               marginTop: "12px",
               height: "31px",
-              backgroundColor: "#f1f1f1",
+              backgroundColor: "#f0c14b",
               color: "black",
               textTransform: "none",
             }}

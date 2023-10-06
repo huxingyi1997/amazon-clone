@@ -6,16 +6,18 @@ import {
   Param,
   Patch,
   Post,
-  UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiHeader, ApiTags } from '@nestjs/swagger';
 
 import { ProductService } from './product.service';
-import { Product, ProductDocument } from './product.schema';
-import { JwtGuard } from '../auth/guards/jwt.guard';
+import { Product } from './product.schema';
 import { CreateProductDto, UpdateProductDto } from './dto/product.dto';
 
 @ApiTags('product')
+@ApiHeader({
+  name: 'Authorization',
+  description: 'Auth token',
+})
 @Controller('product')
 export class ProductController {
   constructor(private productService: ProductService) {}
@@ -30,9 +32,8 @@ export class ProductController {
     return this.productService.findAll();
   }
 
-  @UseGuards(JwtGuard)
   @Get(':id')
-  findProduct(@Param('id') id: string): Promise<ProductDocument> {
+  findProduct(@Param('id') id: string): Promise<Product> {
     return this.productService.find(id);
   }
 

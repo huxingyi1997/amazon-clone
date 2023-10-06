@@ -15,6 +15,7 @@ import { resetCart } from "../productSlice";
 
 const PaymentComponent: FC = () => {
   const { cart } = useAppSelector((state) => state.product);
+  const { jwt } = useAppSelector((state) => state.auth);
 
   const dispatch = useAppDispatch();
 
@@ -47,7 +48,7 @@ const PaymentComponent: FC = () => {
 
     try {
       const url = `${baseAPI}/stripe`;
-      const res = await axios.post(url, { cart });
+      const res = await axios.post(url, { cart }, {headers: { Authorization: `Bearer ${jwt?.token}` }});
 
       const { client_secret: clientSecret } = res.data;
 

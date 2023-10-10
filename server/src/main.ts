@@ -2,18 +2,18 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import { AppModule } from './app.module';
+import { apiVersion } from './constants';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
-  app.setGlobalPrefix('api');
+  app.setGlobalPrefix(`api/v${apiVersion}`);
 
   /** Swagger setup */
-  const apiVersion = '1';
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('Release management system API')
-    .setDescription(`version1`)
-    .setVersion(apiVersion)
+    .setTitle('Amazon Clone API')
+    .setDescription(`v${apiVersion}`)
+    .setVersion(`${apiVersion}`)
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('api-docs', app, document, {

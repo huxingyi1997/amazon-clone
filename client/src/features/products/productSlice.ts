@@ -5,9 +5,8 @@ import {
   createSlice,
 } from "@reduxjs/toolkit";
 
-import { Cart } from "./models/Cart";
-import { ProductDocument } from "./models/Product";
 import { productService } from "./services/product.service";
+import { CartItem, ProductItem } from "../../api/autogen";
 
 interface AsyncState {
   isLoading: boolean;
@@ -16,8 +15,8 @@ interface AsyncState {
 }
 
 interface ProductState extends AsyncState {
-  products: ProductDocument[];
-  cart: Cart;
+  products: ProductItem[];
+  cart: CartItem[];
 }
 
 const initialState: ProductState = {
@@ -29,17 +28,17 @@ const initialState: ProductState = {
 };
 
 const modifyQtyByOne = (
-  cart: Cart,
-  selectedProduct: ProductDocument,
+  cart: CartItem[],
+  selectedProduct: ProductItem,
   modificationType: "INCREMENT" | "DECREMENT"
-): Cart => {
-  const previousCart: Cart = [...cart];
+): CartItem[] => {
+  const previousCart: CartItem[] = [...cart];
 
   const productInCart = previousCart.find(
     (product) => product._id === selectedProduct._id
   );
 
-  let newCart: Cart = [];
+  let newCart: CartItem[] = [];
 
   if (!productInCart) {
     previousCart.push({ ...selectedProduct, quantity: 1 });
@@ -62,19 +61,22 @@ const modifyQtyByOne = (
   return newCart;
 };
 
-export const getProducts = createAsyncThunk("product", async (token?: string) => {
-  try {
-    return await productService.getProducts(token);
-  } catch (error) {
-    console.log("Get product with error: ", error);
+export const getProducts = createAsyncThunk(
+  "product",
+  async (token?: string) => {
+    try {
+      return await productService.getProducts(token);
+    } catch (error) {
+      console.log("Get product with error: ", error);
+    }
   }
-});
+);
 
 export const productSlice = createSlice({
   name: "product",
   initialState,
   reducers: {
-    incrementProduct: (state, action: PayloadAction<ProductDocument>) => {
+    incrementProduct: (state, action: PayloadAction<ProductItem>) => {
       const modifiedCart = modifyQtyByOne(
         state.cart,
         action.payload,
@@ -82,7 +84,7 @@ export const productSlice = createSlice({
       );
       state.cart = modifiedCart;
     },
-    decrementProduct: (state, action: PayloadAction<ProductDocument>) => {
+    decrementProduct: (state, action: PayloadAction<ProductItem>) => {
       const modifiedCart = modifyQtyByOne(
         state.cart,
         action.payload,
@@ -102,7 +104,7 @@ export const productSlice = createSlice({
       .addCase(getProducts.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.products = action.payload?.data || [];
+        state.products = action.payload || [];
       })
       .addCase(getProducts.rejected, (state) => {
         state.isLoading = false;

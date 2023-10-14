@@ -5,19 +5,26 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { APP_GUARD, APP_PIPE } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import * as Joi from '@hapi/joi';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+
 import { ProductModule } from './product/product.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { StripeModule } from './stripe/stripe.module';
+
 import { JwtGuard } from './auth/guards/jwt.guard';
-import { LoggerMiddleware } from './middleware/logger.middleware';
+import {
+  AllExceptionsFilter,
+  HttpExceptionFilter,
+  LoggerMiddleware,
+  TransformInterceptor,
+} from './common';
 
 @Module({
   imports: [
@@ -27,6 +34,8 @@ import { LoggerMiddleware } from './middleware/logger.middleware';
         NODE_ENV: Joi.string()
           .valid('development', 'production')
           .default('development'),
+        MONGODB_PROD_ENV: Joi.string().required(),
+        STRIPE_SECRET_KEY: Joi.string().required(),
       }),
     }),
     MongooseModule.forRootAsync({
@@ -58,10 +67,22 @@ import { LoggerMiddleware } from './middleware/logger.middleware';
       provide: APP_GUARD,
       useClass: JwtGuard,
     },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: TransformInterceptor,
+    },
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionFilter,
+    },
+    {
+      provide: APP_FILTER,
+      useClass: AllExceptionsFilter,
+    },
   ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggerMiddleware).exclude('*hello').forRoutes('*');
+    consumer.apply(LoggerMiddleware).forRoutes('*');
   }
 }

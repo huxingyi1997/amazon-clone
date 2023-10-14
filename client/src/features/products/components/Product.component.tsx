@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 
 import {
   Card,
@@ -9,12 +9,12 @@ import {
   Typography,
 } from "@mui/material";
 
-import { ProductDocument } from "../models/Product";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux/hooks";
 import { decrementProduct, incrementProduct } from "../productSlice";
+import { ProductItem } from "../../../api/autogen";
 
 interface ProductComponentProps {
-  product: ProductDocument;
+  product: ProductItem;
 }
 
 const ProductComponent: FC<ProductComponentProps> = ({
@@ -42,7 +42,7 @@ const ProductComponent: FC<ProductComponentProps> = ({
         </Typography>
         {product.description && (
           <Typography variant="body2" color="text.secondary">
-           * {product.description}
+            * {product.description}
           </Typography>
         )}
       </CardContent>

@@ -5,10 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build:tsc": "tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "test": "vitest",
-    "test:e2e": "cypress open"
+    "test:e2e": "cypress open",
+    "gen-api": "node ./src/api/json-merge.cjs && openapi-generator-cli generate -i ./src/api/new-api-docs.json -g typescript-axios -o ./src/api/autogen --skip-validate-spec",
+    "lint": "prettier --write 'src/**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@babel/core": "7.0.0",
@@ -28,16 +32,40 @@
     "react-router-dom": "^6.6.2"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.7.2",
+    "@commitlint/config-angular": "^17.7.0",
+    "@openapitools/openapi-generator-cli": "^2.7.0",
     "@testing-library/react": "^13.4.0",
     "@types/node": "^18.11.18",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.9",
     "@vitejs/plugin-react-swc": "^3.0.0",
     "cypress": "^12.4.1",
+    "cz-conventional-changelog": "^3.3.0",
+    "husky": "^8.0.3",
     "jsdom": "^21.1.0",
+    "jsonfile": "^6.1.0",
+    "lint-staged": "^14.0.1",
+    "prettier": "^3.0.3",
     "typescript": "^4.9.3",
     "vite": "^4.0.0",
     "vitest": "^0.28.2",
     "vitest-localstorage-mock": "^0.0.1"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    }
   }
 }

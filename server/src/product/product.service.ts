@@ -4,7 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { CreateProductDto, UpdateProductDto } from './dto/product.dto';
-import { Product, ProductDocument } from './product.schema';
+import { ProductDocument } from './product.schema';
 
 @Injectable()
 export class ProductService {
@@ -13,35 +13,33 @@ export class ProductService {
     private readonly productModel: Model<ProductDocument>,
   ) {}
 
-  async create(createProductDto: CreateProductDto): Promise<Product> {
+  async create(createProductDto: CreateProductDto) {
     const newProduct = await new this.productModel(createProductDto).save();
-    return newProduct;
+
+    return { product: newProduct };
   }
 
-  async findAll(): Promise<Product[]> {
+  async findAll() {
     const products = await this.productModel.find().exec();
 
     if (!products) {
       throw new NotFoundException(`Products data not found`);
     }
 
-    return this.productModel.find().exec();
+    return { products };
   }
 
-  async find(id: string): Promise<Product> {
+  async find(id: string) {
     const product = await this.productModel.findById(id).exec();
 
     if (!product) {
       throw new NotFoundException(`Product #${id} not found`);
     }
 
-    return product;
+    return { product };
   }
 
-  async update(
-    id: string,
-    updateProductDto: UpdateProductDto,
-  ): Promise<Product> {
+  async update(id: string, updateProductDto: UpdateProductDto) {
     const existingProduct = await this.productModel.findByIdAndUpdate(
       id,
       updateProductDto,
@@ -52,14 +50,16 @@ export class ProductService {
       throw new NotFoundException(`Product #${id} not found`);
     }
 
-    return existingProduct;
+    return { product: existingProduct };
   }
 
-  async delete(id: string): Promise<Product> {
+  async delete(id: string) {
     const deletedProduct = await this.productModel.findByIdAndDelete(id);
+
     if (!deletedProduct) {
       throw new NotFoundException(`Product #${id} not found`);
     }
-    return deletedProduct;
+
+    return { product: deletedProduct };
   }
 }

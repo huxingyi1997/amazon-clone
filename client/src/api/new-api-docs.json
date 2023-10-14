@@ -1,0 +1,484 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/v1/product": {
+      "post": {
+        "operationId": "ProductController_createProduct",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateProductDto" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetProductVoUnifiedRes"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["product"],
+        "security": [{ "bearer": [] }]
+      },
+      "get": {
+        "operationId": "ProductController_findAllProducts",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllProductsVoUnifiedRes"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["product"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/api/v1/product/{id}": {
+      "get": {
+        "operationId": "ProductController_findProduct",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetProductVoUnifiedRes"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["product"],
+        "security": [{ "bearer": [] }]
+      },
+      "patch": {
+        "operationId": "ProductController_updateProduct",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UpdateProductDto" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetProductVoUnifiedRes"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["product"],
+        "security": [{ "bearer": [] }]
+      },
+      "delete": {
+        "operationId": "ProductController_deleteProduct",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetProductVoUnifiedRes"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["product"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/api/v1/user/{id}": {
+      "get": {
+        "operationId": "UserController_getUser",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDetailUnifiedRes"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["user"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/api/v1/auth/register": {
+      "post": {
+        "operationId": "AuthController_register",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/NewUserDTO" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDetailUnifiedRes"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["auth"]
+      }
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "operationId": "AuthController_login",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ExistingUserDTO" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/LoginVoUnifiedRes" }
+              }
+            }
+          }
+        },
+        "tags": ["auth"]
+      }
+    },
+    "/api/v1/auth/verify-jwt": {
+      "post": {
+        "operationId": "AuthController_verifyJwt",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/VerifyJwtDto" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerifyJwtVoUnifiedRes"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["auth"]
+      }
+    },
+    "/api/v1/stripe": {
+      "post": {
+        "operationId": "StripeController_checkout",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CheckoutCartDto" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CheckoutCartVoUnifiedRes"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["stripe"],
+        "security": [{ "bearer": [] }]
+      }
+    }
+  },
+  "info": {
+    "title": "Amazon Clone API",
+    "description": "v1",
+    "version": "1",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "bearer": { "scheme": "bearer", "bearerFormat": "JWT", "type": "http" }
+    },
+    "schemas": {
+      "ProductItem": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string" },
+          "__v": { "type": "number" },
+          "name": { "type": "string" },
+          "price": { "type": "number" },
+          "description": { "type": "string" }
+        },
+        "required": ["_id", "name", "price"]
+      },
+      "GetProductVo": {
+        "type": "object",
+        "properties": {
+          "product": { "$ref": "#/components/schemas/ProductItem" }
+        }
+      },
+      "GetAllProductsVo": {
+        "type": "object",
+        "properties": {
+          "products": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/ProductItem" }
+          }
+        }
+      },
+      "CreateProductDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "price": { "type": "number" },
+          "description": { "type": "string" }
+        },
+        "required": ["name", "price"]
+      },
+      "UpdateProductDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "price": { "type": "number" },
+          "description": { "type": "string" }
+        }
+      },
+      "UserDetail": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "email": { "type": "string" },
+          "name": { "type": "string" }
+        },
+        "required": ["id", "email", "name"]
+      },
+      "LoginVo": {
+        "type": "object",
+        "properties": { "token": { "type": "string" } },
+        "required": ["token"]
+      },
+      "VerifyJwtVo": {
+        "type": "object",
+        "properties": { "exp": { "type": "number" } },
+        "required": ["exp"]
+      },
+      "NewUserDTO": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "email": { "type": "string" },
+          "password": { "type": "string", "minLength": 6 }
+        },
+        "required": ["name", "email", "password"]
+      },
+      "ExistingUserDTO": {
+        "type": "object",
+        "properties": {
+          "email": { "type": "string" },
+          "password": { "type": "string", "minLength": 6 }
+        },
+        "required": ["email", "password"]
+      },
+      "VerifyJwtDto": {
+        "type": "object",
+        "properties": { "jwt": { "type": "string" } },
+        "required": ["jwt"]
+      },
+      "CheckoutCartVo": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "object": { "type": "string" },
+          "amount": { "type": "number" },
+          "amount_capturable": { "type": "number" },
+          "amount_received": { "type": "number" },
+          "application": { "type": "string" },
+          "application_fee_amount": { "type": "number" },
+          "automatic_payment_methods": { "type": "string" },
+          "canceled_at": { "type": "number" },
+          "cancellation_reason": { "type": "string" },
+          "capture_method": { "type": "string" },
+          "client_secret": { "type": "string" },
+          "confirmation_method": { "type": "string" },
+          "created": { "type": "number" }
+        },
+        "required": [
+          "id",
+          "object",
+          "amount",
+          "amount_capturable",
+          "amount_received",
+          "capture_method",
+          "client_secret",
+          "confirmation_method",
+          "created"
+        ]
+      },
+      "CartItem": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string" },
+          "__v": { "type": "number" },
+          "name": { "type": "string" },
+          "price": { "type": "number" },
+          "description": { "type": "string" },
+          "quantity": { "type": "number" }
+        },
+        "required": ["_id", "name", "price", "quantity"]
+      },
+      "CheckoutCartDto": {
+        "type": "object",
+        "properties": {
+          "cart": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/CartItem" }
+          }
+        },
+        "required": ["cart"]
+      },
+      "GetProductVoUnifiedRes": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "$ref": "#/components/schemas/GetProductVo"
+          },
+          "error": { "type": "integer" },
+          "error_msg": { "type": "string" }
+        }
+      },
+      "GetAllProductsVoUnifiedRes": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "$ref": "#/components/schemas/GetAllProductsVo"
+          },
+          "error": { "type": "integer" },
+          "error_msg": { "type": "string" }
+        }
+      },
+      "UserDetailUnifiedRes": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "$ref": "#/components/schemas/UserDetail"
+          },
+          "error": { "type": "integer" },
+          "error_msg": { "type": "string" }
+        }
+      },
+      "LoginVoUnifiedRes": {
+        "type": "object",
+        "properties": {
+          "data": { "type": "object", "$ref": "#/components/schemas/LoginVo" },
+          "error": { "type": "integer" },
+          "error_msg": { "type": "string" }
+        }
+      },
+      "VerifyJwtVoUnifiedRes": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "$ref": "#/components/schemas/VerifyJwtVo"
+          },
+          "error": { "type": "integer" },
+          "error_msg": { "type": "string" }
+        }
+      },
+      "CheckoutCartVoUnifiedRes": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "$ref": "#/components/schemas/CheckoutCartVo"
+          },
+          "error": { "type": "integer" },
+          "error_msg": { "type": "string" }
+        }
+      }
+    }
+  }
+}

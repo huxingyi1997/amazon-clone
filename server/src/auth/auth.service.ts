@@ -6,7 +6,7 @@ import { hash, compare } from 'bcrypt';
 import { UserService } from '../user/user.service';
 import { NewUserDTO } from '../user/dto/new-user.dto';
 import { ExistingUserDTO } from '../user/dto/existing-user.dto';
-import { UserDetails } from '../user/dto/user.dto';
+import { UserDetail } from '../user/dto/user.dto';
 import { LoginVo, VerifyJwtVo } from './dto/auth.dto';
 
 @Injectable()
@@ -20,7 +20,7 @@ export class AuthService {
     return hash(password, 12);
   }
 
-  async register(user: Readonly<NewUserDTO>): Promise<UserDetails> {
+  async register(user: Readonly<NewUserDTO>): Promise<UserDetail> {
     const { name, email, password } = user;
 
     const existingUser = await this.userService.findByEmail(email);
@@ -47,7 +47,7 @@ export class AuthService {
   async validateUser(
     email: string,
     password: string,
-  ): Promise<UserDetails | null> {
+  ): Promise<UserDetail | null> {
     const user = await this.userService.findByEmail(email);
     const doesUserExist = !!user;
 

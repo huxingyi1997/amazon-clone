@@ -4,7 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { UserDocument } from './user.schema';
-import { UserDetails } from './dto/user.dto';
+import { UserDetail } from './dto/user.dto';
 
 @Injectable()
 export class UserService {
@@ -12,7 +12,7 @@ export class UserService {
     @InjectModel('User') private readonly userModel: Model<UserDocument>,
   ) {}
 
-  _getUserDetails(user: UserDocument): UserDetails {
+  _getUserDetails(user: UserDocument): UserDetail {
     return {
       id: user._id,
       name: user.name,
@@ -30,7 +30,7 @@ export class UserService {
     return user;
   }
 
-  async findById(id: string): Promise<UserDetails> {
+  async findById(id: string): Promise<UserDetail> {
     const user = await this.userModel.findById(id).exec();
 
     if (!user) {

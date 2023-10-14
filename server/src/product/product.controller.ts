@@ -7,46 +7,56 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { ApiHeader, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiExtraModels, ApiTags } from '@nestjs/swagger';
 
 import { ProductService } from './product.service';
-import { Product } from './product.schema';
-import { CreateProductDto, UpdateProductDto } from './dto/product.dto';
+import {
+  CreateProductDto,
+  GetAllProductsVo,
+  GetProductVo,
+  UpdateProductDto,
+} from './dto/product.dto';
+import { ApiUnifiedCreatedResponse, ApiUnifiedOkResponse } from 'src/utils';
 
 @ApiTags('product')
-@ApiHeader({
-  name: 'Authorization',
-  description: 'Auth token',
-})
+@ApiExtraModels(GetProductVo, GetAllProductsVo)
+@ApiBearerAuth()
 @Controller('product')
 export class ProductController {
   constructor(private productService: ProductService) {}
 
+  @ApiUnifiedCreatedResponse(GetProductVo)
   @Post()
-  createProduct(@Body() createProductDto: CreateProductDto): Promise<Product> {
+  createProduct(
+    @Body() createProductDto: CreateProductDto,
+  ): Promise<GetProductVo> {
     return this.productService.create(createProductDto);
   }
 
+  @ApiUnifiedOkResponse(GetAllProductsVo)
   @Get()
-  findAllProducts(): Promise<Product[]> {
+  findAllProducts(): Promise<GetAllProductsVo> {
     return this.productService.findAll();
   }
 
+  @ApiUnifiedOkResponse(GetProductVo)
   @Get(':id')
-  findProduct(@Param('id') id: string): Promise<Product> {
+  findProduct(@Param('id') id: string): Promise<GetProductVo> {
     return this.productService.find(id);
   }
 
+  @ApiUnifiedOkResponse(GetProductVo)
   @Patch(':id')
   updateProduct(
     @Param('id') id: string,
     @Body() updateProductDto: UpdateProductDto,
-  ): Promise<Product> {
+  ): Promise<GetProductVo> {
     return this.productService.update(id, updateProductDto);
   }
 
+  @ApiUnifiedOkResponse(GetProductVo)
   @Delete(':id')
-  deleteProduct(@Param('id') id: string): Promise<Product> {
+  deleteProduct(@Param('id') id: string): Promise<GetProductVo> {
     return this.productService.delete(id);
   }
 }

@@ -13,13 +13,13 @@ const HomePage: FC = () => {
 
   useEffect(() => {
     const token = jwt?.token;
-    dispatch(getProducts(token));
-  }, [])
+    if (token) dispatch(getProducts(token));
+  }, [jwt?.token]);
 
   return (
     <div>
       <HeaderComponent />
-      
+
       <div
         style={{
           display: "flex",

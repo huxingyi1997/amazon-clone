@@ -1,8 +1,6 @@
 import { ChangeEvent, useReducer } from "react";
 import { Action } from "../../shared/models/action.interface";
-import {
-  InputActionEnum,
-} from "./models/InputAction";
+import { InputActionEnum } from "./models/InputAction";
 import { InputState } from "./models/InputState.interface";
 import { ValidatorFn } from "../../shared/utils/validation/models/ValidatorFn";
 

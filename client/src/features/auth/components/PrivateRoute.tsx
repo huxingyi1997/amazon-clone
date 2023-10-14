@@ -19,9 +19,8 @@ const PrivateRoute: FC<PrivateRouteProps> = (props: PrivateRouteProps) => {
 
   useEffect(() => {
     if (!jwt || !jwt.token) return;
-
-    dispatch(verifyJwt(jwt.token));
-  }, [jwt, isSuccess]);
+    if (!isSuccess) dispatch(verifyJwt(jwt.token));
+  }, [jwt?.token, isSuccess]);
 
   return isAuthenticated ? page : <Navigate replace to="/signin" />;
 };

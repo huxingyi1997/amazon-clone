@@ -1,7 +1,7 @@
-import { DisplayUser } from "./DisplayUser.interface";
+import { UserDetail } from "../../../api/autogen";
 
 export interface DecodedJwt {
-  user: DisplayUser;
+  user: UserDetail;
   exp: number;
   iat: number;
 }

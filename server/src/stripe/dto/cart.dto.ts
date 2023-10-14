@@ -8,30 +8,12 @@ import {
   ValidateNested,
 } from 'class-validator';
 
-export class CartItem {
-  @IsString()
-  @IsNotEmpty()
-  name: string;
+import { ProductItem } from 'src/product/dto/product.dto';
 
-  @IsNumber()
-  @IsNotEmpty()
-  price: number;
-
+export class CartItem extends ProductItem {
   @IsNumber()
   @IsNotEmpty()
   quantity: number;
-
-  @IsString()
-  @IsOptional()
-  description?: string;
-
-  @IsString()
-  @IsNotEmpty()
-  _id: string;
-
-  @IsNumber()
-  @IsNotEmpty()
-  __v: number;
 }
 
 export class CheckoutCartDto {
@@ -42,4 +24,60 @@ export class CheckoutCartDto {
   cart: CartItem[];
 }
 
-export class CheckoutCartVo {}
+export class CheckoutCartVo {
+  @IsString()
+  @IsNotEmpty()
+  id: string;
+
+  @IsString()
+  @IsNotEmpty()
+  object: string;
+
+  @IsNumber()
+  @IsNotEmpty()
+  amount: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  amount_capturable: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  amount_received: number;
+
+  @IsString()
+  @IsOptional()
+  application?: string;
+
+  @IsNumber()
+  @IsOptional()
+  application_fee_amount?: number;
+
+  @IsString()
+  @IsOptional()
+  automatic_payment_methods?: string;
+
+  @IsNumber()
+  @IsOptional()
+  canceled_at?: number;
+
+  @IsString()
+  @IsOptional()
+  cancellation_reason?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  capture_method: string;
+
+  @IsString()
+  @IsNotEmpty()
+  client_secret: string;
+
+  @IsString()
+  @IsNotEmpty()
+  confirmation_method: string;
+
+  @IsNumber()
+  @IsNotEmpty()
+  created: number;
+}

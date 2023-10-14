@@ -18,9 +18,9 @@ import {
   validatePasswordLength,
 } from "../../../shared/utils/validation/length";
 import { validateEmail } from "../../../shared/utils/validation/email";
-import { NewUser } from "../models/NewUser";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux/hooks";
 import { register, reset } from "../authSlice";
+import { NewUserDTO } from "../../../api/autogen";
 
 const RegistrationFormComponent: FC = () => {
   const {
@@ -97,7 +97,7 @@ const RegistrationFormComponent: FC = () => {
     )
       return;
 
-    const newUser: NewUser = {
+    const newUser: NewUserDTO = {
       name,
       email,
       password,

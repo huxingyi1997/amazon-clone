@@ -1,40 +1,42 @@
-import axios from "axios";
 import jwt_decode from "jwt-decode";
 
-import { DisplayUser } from "../models/DisplayUser.interface";
-import { NewUser } from "../models/NewUser";
-import { LoginUser } from "../models/LoginUser.interface";
-import { Jwt } from "../models/Jwt";
 import { DecodedJwt } from "../models/DecodedJwt.interface";
-import { baseAPI } from "../../constant";
+import { authApiInterface } from "../../../api";
+import {
+  ExistingUserDTO,
+  LoginVo,
+  NewUserDTO,
+  UserDetail,
+} from "../../../api/autogen";
 
-const register = async (newUser: NewUser): Promise<DisplayUser | null> => {
-  const url = `${baseAPI}/auth/register`;
-  const response = await axios.post(url, newUser);
+const register = async (
+  newUser: NewUserDTO
+): Promise<UserDetail | undefined> => {
+  const response = await authApiInterface.authControllerRegister(newUser);
 
-  return response.data;
+  return response.data.data;
 };
 
 interface LoginData {
-  jwt: Jwt;
-  user: DisplayUser | null;
+  jwt?: LoginVo;
+  user?: UserDetail;
 }
 
-const login = async (user: LoginUser): Promise<LoginData> => {
-  const url = `${baseAPI}/auth/login`;
-  const response = await axios.post(url, user);
+const login = async (user: ExistingUserDTO): Promise<LoginData> => {
+  const response = await authApiInterface.authControllerLogin(user);
 
-  if (response.data) {
-    localStorage.setItem("jwt", JSON.stringify(response.data));
+  const data = response.data.data;
+  if (data) {
+    localStorage.setItem("jwt", JSON.stringify(data));
 
-    const decodedJwt: DecodedJwt = jwt_decode(response.data.token);
+    const decodedJwt: DecodedJwt = jwt_decode(data.token);
     localStorage.setItem("user", JSON.stringify(decodedJwt.user));
     return {
-      jwt: response.data,
+      jwt: data,
       user: decodedJwt.user,
     };
   }
-  return { jwt: response.data, user: null };
+  return { jwt: data, user: undefined };
 };
 
 const logout = (): void => {
@@ -43,11 +45,11 @@ const logout = (): void => {
 };
 
 const verifyJwt = async (jwt: string): Promise<boolean> => {
-  const url = `${baseAPI}/auth/verify-jwt`;
-  const response = await axios.post(url, { jwt });
+  const response = await authApiInterface.authControllerVerifyJwt({ jwt });
+  const data = response.data.data;
 
-  if (response.data) {
-    const jwtExpirationMs = response.data.exp * 1000;
+  if (data) {
+    const jwtExpirationMs = data.exp * 1000;
     return jwtExpirationMs > Date.now();
   }
 

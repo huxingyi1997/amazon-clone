@@ -10,12 +10,13 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
+
 import useInput from "../../../hooks/input/use-input";
 import { validatePasswordLength } from "../../../shared/utils/validation/length";
 import { validateEmail } from "../../../shared/utils/validation/email";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux/hooks";
 import { login, reset } from "../authSlice";
-import { LoginUser } from "../models/LoginUser.interface";
+import { ExistingUserDTO } from "../../../api/autogen";
 
 const SigninFormComponent: FC = () => {
   const {
@@ -66,7 +67,7 @@ const SigninFormComponent: FC = () => {
 
     if (email.length === 0 || password.length === 0) return;
 
-    const loginUser: LoginUser = { email, password };
+    const loginUser: ExistingUserDTO = { email, password };
 
     dispatch(login(loginUser));
   };

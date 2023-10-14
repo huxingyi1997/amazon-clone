@@ -1,8 +1,8 @@
 import { HttpStatus, Injectable, NestMiddleware, Type } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 
-import { Logger, isPathMatch } from '../utils';
-import { helloPath } from '../constants';
+import { Logger, isPathMatch } from '../../utils';
+import { helloPath } from '../../constants';
 
 export interface ILoggerOptions {
   skipPaths?: string[];

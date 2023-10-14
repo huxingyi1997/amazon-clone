@@ -7,11 +7,11 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import axios from "axios";
 
-import { baseAPI, stripeSecretKey } from "../../constant";
+import { stripeSecretKey } from "../../constant";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux/hooks";
 import { resetCart } from "../productSlice";
+import { stripeApiInterface } from "../../../api";
 
 const PaymentComponent: FC = () => {
   const { cart } = useAppSelector((state) => state.product);
@@ -47,10 +47,12 @@ const PaymentComponent: FC = () => {
     setIsProcessing(true);
 
     try {
-      const url = `${baseAPI}/stripe`;
-      const res = await axios.post(url, { cart }, {headers: { Authorization: `Bearer ${jwt?.token}` }});
+      const res = await stripeApiInterface.stripeControllerCheckout(
+        { cart },
+        { headers: { Authorization: `Bearer ${jwt?.token}` } }
+      );
 
-      const { client_secret: clientSecret } = res.data;
+      const { client_secret: clientSecret } = res.data.data!;
 
       const { paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
         payment_method: {

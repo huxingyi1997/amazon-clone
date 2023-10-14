@@ -1,15 +1,11 @@
-import axios from "axios";
-
-import { baseAPI } from "../../constant";
-import { ProductDocument } from "../models/Product";
+import { productApiInterface } from "../../../api";
 
 const getProducts = async (token?: string) => {
-  const url = `${baseAPI}/product`;
-  const response = await axios.get<ProductDocument[]>(url, {
+  const response = await productApiInterface.productControllerFindAllProducts({
     headers: { Authorization: `Bearer ${token}` },
   });
 
-  return response;
+  return response.data.data?.products ?? [];
 };
 
 export const productService = {

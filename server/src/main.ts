@@ -1,4 +1,3 @@
-import { RequestMethod } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
@@ -19,13 +18,6 @@ async function bootstrap() {
   app.enableCors({
     // Space host and localhost for developing
     origin: ['http://127.0.0.1:5173'],
-    methods: [
-      RequestMethod[RequestMethod.GET],
-      RequestMethod[RequestMethod.POST],
-      RequestMethod[RequestMethod.PATCH],
-      RequestMethod[RequestMethod.DELETE],
-      RequestMethod[RequestMethod.OPTIONS],
-    ],
     credentials: true,
   });
   app.setGlobalPrefix(`api/v${apiVersion}`);

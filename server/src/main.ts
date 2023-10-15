@@ -1,3 +1,4 @@
+import { VersioningType } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
@@ -20,7 +21,11 @@ async function bootstrap() {
     origin: ['http://127.0.0.1:5173'],
     credentials: true,
   });
-  app.setGlobalPrefix(`api/v${apiVersion}`);
+  app.enableVersioning({
+    type: VersioningType.URI,
+    defaultVersion: `${apiVersion}`,
+  });
+  app.setGlobalPrefix(`api`);
 
   /** Swagger setup */
   const swaggerConfig = new DocumentBuilder()

@@ -297,15 +297,6 @@
           "product": { "$ref": "#/components/schemas/ProductItem" }
         }
       },
-      "GetAllProductsVo": {
-        "type": "object",
-        "properties": {
-          "products": {
-            "type": "array",
-            "items": { "$ref": "#/components/schemas/ProductItem" }
-          }
-        }
-      },
       "CreateProductDto": {
         "type": "object",
         "properties": {
@@ -314,6 +305,15 @@
           "description": { "type": "string" }
         },
         "required": ["name", "price"]
+      },
+      "GetAllProductsVo": {
+        "type": "object",
+        "properties": {
+          "products": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/ProductItem" }
+          }
+        }
       },
       "UpdateProductDto": {
         "type": "object",
@@ -332,16 +332,6 @@
         },
         "required": ["id", "email", "name"]
       },
-      "LoginVo": {
-        "type": "object",
-        "properties": { "token": { "type": "string" } },
-        "required": ["token"]
-      },
-      "VerifyJwtVo": {
-        "type": "object",
-        "properties": { "exp": { "type": "number" } },
-        "required": ["exp"]
-      },
       "NewUserDTO": {
         "type": "object",
         "properties": {
@@ -351,6 +341,11 @@
         },
         "required": ["name", "email", "password"]
       },
+      "LoginVo": {
+        "type": "object",
+        "properties": { "token": { "type": "string" } },
+        "required": ["token"]
+      },
       "ExistingUserDTO": {
         "type": "object",
         "properties": {
@@ -358,6 +353,11 @@
           "password": { "type": "string", "minLength": 6 }
         },
         "required": ["email", "password"]
+      },
+      "VerifyJwtVo": {
+        "type": "object",
+        "properties": { "exp": { "type": "number" } },
+        "required": ["exp"]
       },
       "VerifyJwtDto": {
         "type": "object",

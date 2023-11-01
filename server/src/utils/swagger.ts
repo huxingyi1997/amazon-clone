@@ -5,6 +5,7 @@ import {
   ApiProperty,
   getSchemaPath,
   ApiResponseOptions,
+  ApiExtraModels,
 } from '@nestjs/swagger';
 
 export class UnifyResponseDto<TData> {
@@ -55,11 +56,21 @@ const getApiResponseOptions = <TModel extends Type<any>>(
 export const ApiUnifiedOkResponse = <TModel extends Type<any>>(
   model?: TModel,
 ) => {
-  return applyDecorators(ApiOkResponse(getApiResponseOptions(model)));
+  return model
+    ? applyDecorators(
+        ApiExtraModels(model),
+        ApiOkResponse(getApiResponseOptions(model)),
+      )
+    : applyDecorators(ApiOkResponse(getApiResponseOptions(model)));
 };
 
 export const ApiUnifiedCreatedResponse = <TModel extends Type<any>>(
   model?: TModel,
 ) => {
-  return applyDecorators(ApiCreatedResponse(getApiResponseOptions(model)));
+  return model
+    ? applyDecorators(
+        ApiExtraModels(model),
+        ApiCreatedResponse(getApiResponseOptions(model)),
+      )
+    : applyDecorators(ApiCreatedResponse(getApiResponseOptions(model)));
 };

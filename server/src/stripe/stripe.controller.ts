@@ -1,5 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { ApiBearerAuth, ApiExtraModels, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 import { Stripe } from 'stripe';
 
@@ -9,7 +9,6 @@ import { ApiUnifiedCreatedResponse } from 'src/utils';
 
 @ApiTags('stripe')
 @ApiBearerAuth()
-@ApiExtraModels(CheckoutCartVo)
 @Controller('stripe')
 export class StripeController {
   constructor(private stripeService: StripeService) {}

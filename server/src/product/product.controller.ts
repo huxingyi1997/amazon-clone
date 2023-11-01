@@ -7,7 +7,7 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiExtraModels, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 import { ProductService } from './product.service';
 import {
@@ -19,34 +19,33 @@ import {
 import { ApiUnifiedCreatedResponse, ApiUnifiedOkResponse } from 'src/utils';
 
 @ApiTags('product')
-@ApiExtraModels(GetProductVo, GetAllProductsVo)
 @ApiBearerAuth()
 @Controller('product')
 export class ProductController {
   constructor(private productService: ProductService) {}
 
-  @ApiUnifiedCreatedResponse(GetProductVo)
   @Post()
+  @ApiUnifiedCreatedResponse(GetProductVo)
   createProduct(
     @Body() createProductDto: CreateProductDto,
   ): Promise<GetProductVo> {
     return this.productService.create(createProductDto);
   }
 
-  @ApiUnifiedOkResponse(GetAllProductsVo)
   @Get()
+  @ApiUnifiedOkResponse(GetAllProductsVo)
   findAllProducts(): Promise<GetAllProductsVo> {
     return this.productService.findAll();
   }
 
-  @ApiUnifiedOkResponse(GetProductVo)
   @Get(':id')
+  @ApiUnifiedOkResponse(GetProductVo)
   findProduct(@Param('id') id: string): Promise<GetProductVo> {
     return this.productService.find(id);
   }
 
-  @ApiUnifiedOkResponse(GetProductVo)
   @Patch(':id')
+  @ApiUnifiedOkResponse(GetProductVo)
   updateProduct(
     @Param('id') id: string,
     @Body() updateProductDto: UpdateProductDto,
@@ -54,8 +53,8 @@ export class ProductController {
     return this.productService.update(id, updateProductDto);
   }
 
-  @ApiUnifiedOkResponse(GetProductVo)
   @Delete(':id')
+  @ApiUnifiedOkResponse(GetProductVo)
   deleteProduct(@Param('id') id: string): Promise<GetProductVo> {
     return this.productService.delete(id);
   }

@@ -2,21 +2,10 @@ import { Type, applyDecorators } from '@nestjs/common';
 import {
   ApiCreatedResponse,
   ApiOkResponse,
-  ApiProperty,
   getSchemaPath,
   ApiResponseOptions,
   ApiExtraModels,
 } from '@nestjs/swagger';
-
-export class UnifyResponseDto<TData> {
-  @ApiProperty()
-  readonly error: number;
-
-  @ApiProperty()
-  readonly error_msg: string | null;
-
-  readonly data: TData;
-}
 
 const getApiResponseOptions = <TModel extends Type<any>>(
   model?: TModel,

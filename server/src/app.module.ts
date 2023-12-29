@@ -17,6 +17,7 @@ import { ProductModule } from './product/product.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { StripeModule } from './stripe/stripe.module';
+import { HealthModule } from './health/health.module';
 
 import { JwtGuard } from './auth/guards/jwt.guard';
 import {
@@ -55,6 +56,7 @@ import {
     UserModule,
     AuthModule,
     StripeModule,
+    HealthModule,
   ],
   controllers: [AppController],
   providers: [
